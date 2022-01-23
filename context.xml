@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context>
+	<Resource
+		name="[PoolName]"
+		type="javax.sql.DataSource"
+		driverClassName="oracle.jdbc.driver.OracleDriver"
+		factory="org.apache.tomcat.dbcp.dbcp2.BasicDataSourceFactory"
+		username="[Database ID]"
+		password="[Database Password]"
+		url="jdbc:oracle:thin:@[IP Address]:xe"
+		maxTotal="500"
+		maxIdle="100"
+	/>
+</Context>
