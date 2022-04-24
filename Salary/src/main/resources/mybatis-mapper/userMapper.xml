@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        
+<mapper namespace="com.dackdoo.test.mapper.UserMapper">	
+
+	<!-- 이름으로 검색(조회기능).검색버튼 -->
+	<select id="searchUserName" parameterType="String" resultType="BossModel">
+		select rownum, user_id, user_nm, dept_nm from tbl_user u, tbl_dept d
+		where u.dept_no = d.dept_no and u.user_nm = #{ user_nm}
+	</select>
+	
+	<!-- 사원선택시 상세정보 조회. 오른쪽테이블에 -->
+	<select id="getAllUser" parameterType="BossModel" resultType="BossModel">
+		select u.user_id, u.user_nm, d.dept_nm, u.user_telno, u.user_addr, listagg(h.hobby_nm, ',')
+		from tbl_user u, tbl_dept d, tbl_hobby h, tbl_u_b_cnct c
+		where u.dept_no = d.dept_no and u.user_id = c.user_id and h.hobby_no = c.hobby_no
+		and u.user_id= #{ user_id}, u.user_nm=#{ user_nm}, d.dept_nm=#{ dept_nm}, u.user_telno=#{ user_telno}, u.user_addr=#{ user_addr},
+		h.hobby_nm=#{ hobby_nm}
+	</select>
+	
+	
+	<insert id="regUser" parameterType="BossModel">
+		insert into tbl_user values(#{ user_id}, #{ user_nm}, #{ user_telno}, #{ user_addr}, #{ dept_no})
+	</insert>
+	
+	
+	
+	<!-- 업데이트(수정).저장버튼 -->
+	<update id="updUser" parameterType="BossModel">
+		update tbl_user set user_id=#{ user_id}, user_nm=#{ user_nm}, user_telno=#{ user_telno}, user_addr=#{ user_addr}
+	</update>
+	
+	<delete id="delUser" parameterType="BossModel">
+		delete from tbl_user where user_id = #{ user_id}
+	</delete>
+	
+</mapper>        

@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/default_layout}">
+	<link th:href="@{/css/common.css}" rel="stylesheet" />
+	<script type="text/javascript" th:src="@{https://code.jquery.com/jquery-3.6.0.min.js}"></script>
+<body>
+<script type="text/javascript" th:inline="javascript">
+	//alert('확인용');
+	function clickuser(userId, userNm, deptNm){
+		//alert('체크체크');
+		var param = {
+						user_id : userId,
+						user_nm : userNm,
+						dept_nm : deptNm
+					};
+		var url = "/search2";
+		
+		var rownum = $(this).find("td:eq(3)").text()-1;
+		console.log("rownum : " + rownum);
+		
+		$.ajax({
+			url: url,
+			type: 'POST',
+			async : false,
+			data: param,
+			success: function(user_list) {
+				//var user_list = getParameter("ul");
+				//console.log("객체정보 : " + user_list[rownum].user_id);
+				var juser_id = user_list[rownum].user_id;
+				var juser_nm = user_list[rownum].user_nm;
+				var jdept_nm = user_list[rownum].dept_nm; // slect
+				var juser_telno = user_list[rownum].user_telno;
+				var juser_addr = user_list[rownum].user_addr;
+				var jhobby_no = user_list[rownum].hobby_no.split(","); // check
+				
+				$(".id").val(juser_id);
+				$(".nm").val(juser_nm);
+				$(".telno").val(juser_telno);
+				$(".addr").val(juser_addr);
+				$(".dept").find('option[value='+jdept_nm+']').prop("selected",true);
+				
+				for(var i=0; i<jhobby_no.length; i++) {
+					$("input:checkbox[class=hobby][value='"+jhobby_no[i]+"']").prop("checked",true);
+				}
+				
+			},
+			error : function(){
+				alert("사용자정보 불러오기 실패");
+			}
+				/*
+				$(fff).find("bossmodel").each(function(i, f){
+					var juser_id = $(f).find("user_id").text();
+					var juser_nm = $(f).find("user_nm").text();
+					var jdept_nm = $(f).find("dept_nm").text();
+					var juser_telno = $(f).find("user_telno").text();
+					var juser_addr = $(f).find("user_addr").text();
+					var jhobby_nm = $(f).find("hobby_nm").text();
+					
+					console.log("뽑아온 정보 : " + juser_id, juser_nm, jdept_nm, juser_telno, juser_addr, jhobby_nm);
+				});
+				*/
+				//}
+				// 초기화
+				/*
+				$('input[name=user_id]').attr('value', "");
+				$('input[name=user_nm]').attr('value', "");
+				$('input[name=dept_nm]').attr('value', "");
+				$('input[name=user_telno]').attr('value', "");
+				$('input[name=user_addr]').attr('value', "");
+				$('input[name=hobby_nm]').attr('value', "");
+				// 값 넣어주기
+				$('input[name=user_id]').attr('value', juser_id);
+				$('input[name=user_nm]').attr('value', juser_nm);
+				$('input[name=dept_nm]').attr('value', jdept_nm);
+				$('input[name=user_telno]').attr('value', juser_telno);
+				$('input[name=user_addr]').attr('value', juser_addr);
+				$('input[name=hobby_nm]').attr('value', jhobby_nm);	
+				*/
+	
+		})
+	}
+	function search(){
+		$("#UserInfo").attr("action", "/search");
+		$("#UserInfo").submit();
+	}
+
+	//신규등록 팝업창. 만들기
+	$('#reg').click(function(){
+		var win = window.open("/popup.html","NewUserReg", "width=500,height=600");
+		win.document.write('<form th:action="@{/reg}" th:object="${bossModel}">');
+		win.document.write('<table border="1">');
+		win.document.write('<tr>');
+		win.document.write('<th colspan="2">사용자등록</th>');
+		win.document.write('</tr>');
+		win.document.write('<tr>');
+		win.document.write('<td>ID</td>');
+		win.document.write('<td><input></td>');
+		win.document.write('</tr>');
+		win.document.write('<tr>');
+		win.document.write('<td>사원명</td>');
+		win.document.write('<td><input></td>');
+		win.document.write('</tr>');
+		win.document.write('<tr>');
+		win.document.write('<td>부서</td>');
+		win.document.write('<td>');
+		win.document.write('<select name="dept_id">');
+		//win.document.write('<th:block th:each="d : ${deptList}" th:value="${d.dept_id}">');
+		win.document.write('<option th:each="dl : ${deptList}" th:value="${dl.dept_id}" th:text="${dl.dept_nm}"></option>');
+		//win.document.write('</th:block>');
+		win.document.write('</select>');
+		win.document.write('</td>');
+		win.document.write('</tr>');
+		win.document.write('<tr>');
+		win.document.write('<td>전화번호</td>');
+		win.document.write('<td><input></td>');
+		win.document.write('</tr>');
+		win.document.write('<tr>');
+		win.document.write('<td>주소</td>');
+		win.document.write('<td><input></td>');
+		win.document.write('</tr>');
+		win.document.write('<tr>');
+		win.document.write('<td>취미</td>');
+		win.document.write('<td>취미자리/체크박스/데이터리스트로넘기기</td>');
+		win.document.write('</tr>');
+		win.document.write('</table>');
+		win.document.write('</form>');
+	})
+
+</script>
+
+	<div layout:fragment="content" class="content">
+		<h2>This is Content</h2>
+	</div>
+			<!-- 제일 바깥의 테이블 -->
+			
+			<form id="UserInfo">
+			<table id="tbl_ds" border="1">
+				<tr><td colspan="3">
+				<!-- 제목 두개 -->
+					<table id="title">
+						<tr>
+							<th align="center" >조직도</th>
+							<th align="center" >사용자관리</th>
+						</tr>
+					</table>
+				</td></tr>
+				
+				<!-- 검색 -->
+		
+				<tr><td>
+					<!--  <form th:action="@{/search}" th:object="${alldtoModel}" method="get"> -->
+					<table id="searchTBL">
+						<tr>	
+							<td>이름</td>
+							<td><input type="text" name="user_nm"></td>
+							<td><button th:onclick="search();">검색</button></td>
+						</tr> 
+					</table>
+					
+				</td></tr>
+				
+				<!-- 왼쪽 출력되는 부분 -->
+				<tr><td>
+					<table class="sh" border="1" style="float:left;">
+						<tr>
+							<th>ID</th>
+							<th>사원명</th>
+							<th>부서</th>
+						</tr>
+						<th:block th:each="u : ${users}">
+						<tr th:onclick="clickuser([[${u.user_id}]],[[${u.user_nm}]],[[${u.dept_nm}]])">
+							<td th:text=${u.user_id}></td>
+							<td th:text=${u.user_nm}></td>
+						 	<td th:text=${u.dept_nm}></td>
+						 	<td style="display: none" th:text=${u.rownum}></td> 
+						</tr>
+						</th:block>
+					</table>
+				</td></tr>
+				<tr><td>	
+					<table id="dept2" border="1" style="float:right;">
+						<tr>
+							<th>ID</th><td><input class="id" name="user_id"></td>
+						</tr>
+						<tr>
+							<th>사원명</th><td><input class="nm" name="user_nm"></td>
+						</tr>				
+							<tr><th>부서</th><td>
+								<select class="dept" name="dept_id">
+									<option th:each="dl : ${deptList}" th:value="${dl.dept_id}" th:text="${dl.dept_nm}"></option>
+								</select>
+							</td></tr>				
+						<tr>
+							<th>전화번호</th><td><input class="telno" name="user_telno"></td>
+						</tr>
+						<tr>
+							<th>주소</th><td><input class="addr" name="user_addr"></td>
+						</tr>
+						<tr>
+							<th>취미</th><td><input type="checkbox" th:each="hl, num : ${hobbyList}" class="hobby" name="hobby_nm"
+							th:value="${hl.hobby_id}" th:text="${hl.hobby_nm}"></td>
+						</tr>
+					</table>						
+				</td></tr>
+				
+				<!-- 오른쪽 출력되는 부분 -->		
+				
+				
+				<tr><td align="right">
+				
+				
+					<button id="reg" th:onclick="register()">신규등록</button>
+					<button th:onclick="update()">저장</button>
+					<button th:onclick="delete()">삭제</button> 
+ 				
+
+ 				
+				</td></tr>
+			
+			</table>
+			</form>
+</body>
+
+</html>
+
