@@ -9,12 +9,23 @@ body, html {
 	height: 60%;
 }
 
+#first, #second {
+	position: relative;
+}
+
+#bar {
+	position: relative;
+	
+}
 
 #tbl_ds {
 	border : 1px solid black;
 	border-collapse: collapse;
+	position: absolute;
+	top: 200px;
+	margin-left: 500px;
 	width: 1000px;
-	height: 100px;
+	height: 300px;
 }
 
 .sh {

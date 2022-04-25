@@ -89,7 +89,7 @@
 	//신규등록 팝업창. 만들기
 	$('#reg').click(function(){
 		var win = window.open("/popup.html","NewUserReg", "width=500,height=600");
-		win.document.write('<form th:action="@{/reg}" th:object="${bossModel}">');
+		win.document.write('<form th:action="@{/register}" th:object="${bossModel}">');
 		win.document.write('<table border="1">');
 		win.document.write('<tr>');
 		win.document.write('<th colspan="2">사용자등록</th>');
@@ -131,7 +131,7 @@
 </script>
 
 	<div layout:fragment="content" class="content">
-		<h2>This is Content</h2>
+		<h2 align="center">Data Solution</h2>
 	</div>
 			<!-- 제일 바깥의 테이블 -->
 			
@@ -140,9 +140,9 @@
 				<tr><td colspan="3">
 				<!-- 제목 두개 -->
 					<table id="title">
-						<tr>
-							<th align="center" >조직도</th>
-							<th align="center" >사용자관리</th>
+						<tr >
+							<th id="first">조직도</th>
+							<th id="second">사용자관리</th>
 						</tr>
 					</table>
 				</td></tr>
@@ -152,7 +152,7 @@
 				<tr><td>
 					<!--  <form th:action="@{/search}" th:object="${alldtoModel}" method="get"> -->
 					<table id="searchTBL">
-						<tr>	
+						<tr id="bar">	
 							<td>이름</td>
 							<td><input type="text" name="user_nm"></td>
 							<td><button th:onclick="search();">검색</button></td>
@@ -211,7 +211,7 @@
 				<tr><td align="right">
 				
 				
-					<button id="reg" th:onclick="register()">신규등록</button>
+					<button id="reg">신규등록</button>
 					<button th:onclick="update()">저장</button>
 					<button th:onclick="delete()">삭제</button> 
  				
