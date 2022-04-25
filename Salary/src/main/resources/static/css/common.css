@@ -1,0 +1,62 @@
+@charset "EUC-KR";
+
+body, html {
+	height: 100%;
+}
+
+
+.content {
+	height: 60%;
+}
+
+#first, #second {
+	position: relative;
+}
+
+#bar {
+	position: relative;
+	
+}
+
+#tbl_ds {
+	border : 1px solid black;
+	border-collapse: collapse;
+	position: absolute;
+	top: 200px;
+	margin-left: 500px;
+	width: 1000px;
+	height: 300px;
+}
+
+.sh {
+	border : 1px solid black;
+	border-collapse: collapse;
+	width: 480px;
+	height: 100px;
+	margin-left: 10px;
+}
+
+#dept2 {
+	border : 1px solid black;
+	border-collapse: collapse;
+	width: 480px;
+	height: 100px;
+	margin-right: 10px;
+}
+
+#title {
+	border : 1px solid black;
+	border-collapse: collapse;
+}
+
+.search {
+	width: 900px;
+	height: 20px;
+	font-size:10px;
+}
+
+#searchTBL {
+	border : 1px solid black;
+	
+	border-spacing: 0px;
+}

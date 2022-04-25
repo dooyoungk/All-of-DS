@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/default_layout}">
+	<script type="text/javascript" th:src="@{https://code.jquery.com/jquery-3.6.0.min.js}"></script>
+<head>
+<title>Insert title here</title>
+</head>
+<body>
+<form th:action="@{/reg}" th:object="${userModel}">
+	<table border="1">
+		<tr>
+		<th colspan="2">사용자등록</th>
+		</tr>
+		<tr>
+			<td>ID</td>
+			<td><input></td>
+		</tr>
+		<tr>
+			<td>사원명</td>
+			<td><input></td>
+		</tr>
+		
+		<tr>
+			<td>부서</td>
+			<td>
+				<select name="dept_nm">
+					<th:block th:each="d : ${deptList}">
+					<option th:text="${d.dept_nm}"></option>
+					</th:block>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td>전화번호</td>
+			<td><input></td>
+		</tr>
+		<tr>
+			<td>주소</td>
+			<td><input></td>
+		</tr>
+		<tr>
+			<td>취미</td>
+			<td>취미자리이야아아어/체크박스/데이터리스트로넘기기</td>
+		</tr>										
+	</table>
+</form>
+
+
+
+</body>
+</html>
