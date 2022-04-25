@@ -25,7 +25,6 @@
 	</insert>
 	
 	
-	
 	<!-- 업데이트(수정).저장버튼 -->
 	<update id="updUser" parameterType="BossModel">
 		update tbl_user set user_id=#{ user_id}, user_nm=#{ user_nm}, user_telno=#{ user_telno}, user_addr=#{ user_addr}
