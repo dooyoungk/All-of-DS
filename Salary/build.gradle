@@ -19,7 +19,7 @@ repositories {
 }
 
 bootBuildImage {
-	imageName = "${Salary}"
+	imageName = "${project.name}"
 }
 
 
